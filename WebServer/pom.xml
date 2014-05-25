@@ -17,7 +17,32 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+    <repositories>
+        <repository>
+            <id>morphia</id>
+            <url>http://morphia.googlecode.com/svn/mavenrepo/</url>
+        </repository>
+        <repository>
+            <id>MavenCentral</id>
+            <name>Maven repository</name>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+    </repositories>
+
 	<dependencies>
+        <dependency>
+            <groupId>simple-web-chat</groupId>
+            <artifactId>UserModule</artifactId>
+            <version>${user-module-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>simple-web-chat</groupId>
+            <artifactId>MessageModule</artifactId>
+            <version>${message-module-version}</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -60,25 +85,36 @@
             <artifactId>spring-context</artifactId>
             <version>${spring-version}</version>
         </dependency>
-		<!-- Logging -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j-version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j-version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j-version}</version>
-			<scope>runtime</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
 		
 		<!-- Servlet -->
 		<dependency>
@@ -132,7 +168,12 @@
 			<artifactId>cglib</artifactId>
 			<version>2.2</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -153,11 +194,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>com.gemicle.embedded.Main</mainClass>
-						</manifest>
-					</archive>
 					<warName>simple-web-chat</warName>
 					<encoding>UTF-8</encoding>
 				</configuration>
@@ -202,9 +238,6 @@
 				<executions>
 					<execution><goals><goal>java</goal></goals></execution>
 				</executions>
-				<configuration>
-					<mainClass>com.gemicle.embedded.Main</mainClass>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
