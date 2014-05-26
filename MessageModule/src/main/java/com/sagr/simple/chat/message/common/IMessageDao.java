@@ -11,5 +11,6 @@ import java.util.List;
 public interface IMessageDao<T extends IMessage> {
     IResult<Boolean> saveMessage(T message);
     IResult<List<T>> getLastMessages(int limit);
+    IResult<List<T>> getMessagesAfterThis(ObjectId messageId, int limit);
     void removeMessage(ObjectId id);
 }

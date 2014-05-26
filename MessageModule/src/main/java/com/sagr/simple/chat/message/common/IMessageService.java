@@ -11,4 +11,5 @@ import java.util.List;
 public interface IMessageService<T extends IMessage> {
     IResult<Boolean> saveMessage(String message, String author);
     IResult<List<T>> getLastMessages(int limit);
+    IResult<List<T>> getMessagesAfterThis(ObjectId messageId, int limit);
 }

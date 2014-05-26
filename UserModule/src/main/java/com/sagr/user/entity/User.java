@@ -17,11 +17,9 @@ import java.util.Set;
  */
 
 @Entity(value = "users", noClassnameStored = true)
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class User implements IUser {
     @Id
     private String name;
-    @JsonIgnore
     private Set<GrantedAuthority> authorities;
     private Date lastSingInDate;
 
@@ -40,25 +38,21 @@ public class User implements IUser {
         return name;
     }
 
-    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

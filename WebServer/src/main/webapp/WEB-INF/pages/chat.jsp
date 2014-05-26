@@ -1,43 +1,111 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<head>
+    <script type="text/javascript" src="/scripts/jquery-1.11.1.js"></script>
+</head>
 <body>
-
     <script>
+        var messageLimit = ${messageLimit};
+        var userUpdateFrequency= ${userUpdateFrequency};
+        var messagesUpdateFrequency = ${messagesUpdateFrequency};
+
         $(document).ready(function () {
-            $("#update").click(function () {
+            setInterval(function () {
+                $('#users').empty();
                 $.getJSON('getOnlineUsers', function(data){
-                    var items = [];
-                    var getUsersResult = jQuery.parseJSON(data);
-                    alert("addCompanyPriceType ok");
+                    if (data.failed) {
+                        console.log(data.errorList);
+                    } else {
+                        for(var i=0;i<data.resultObject.length;i++){
+                            if (data.resultObject[i].me) {
+                                $('#users').append('<li><span style="color: green; font-weight:bold">' + data.resultObject[i].name + '</span></li>');
+                            } else {
+                                $('#users').append('<li>' + data.resultObject[i].name + '</li>');
+                            }
+                        }
+                    }
+                });
+            }, userUpdateFrequency);
+
+            $("#sendMessage").click(function () {
+                var messageContent = $("#messageContent").val();
+                $.post("saveMessage",{message:messageContent},function(result){
+                    if (result.failed) {
+                        alert(result.errorList);
+                    } else {
+                        $("#messageContent").val("");
+                    }
                 });
             });
 
+            setInterval(function () {
+                var oldMessages = $("#messages").children();
+                var getMessagesUrl;
+                if (oldMessages.length === 0) {
+                    getMessagesUrl = 'getMessages';
+                } else {
+                    var lastMessageId = oldMessages.last().attr('messageId');
+                    getMessagesUrl = 'getMessagesAfterThis?messageId=' + lastMessageId;
+                }
+                $.getJSON(getMessagesUrl, function(data){
+                    if (data.failed) {
+                        console.log(data.errorList);
+                    } else {
+                        if (data.resultObject.length === 0) {
+                            console.log("No new massages")
+                        } else {
+                            var oldMessagesNumber  = oldMessages.length;
+                            var newMessagesNumber  = data.resultObject.length;
+                            if(oldMessagesNumber + newMessagesNumber > messageLimit) {
+                                var mustBeRemoved = (oldMessagesNumber + newMessagesNumber) - messageLimit;
+                                if (mustBeRemoved === oldMessagesNumber) {
+                                    $('#messages').empty();
+                                } else {
+                                    for(var i=0;i<mustBeRemoved;i++){
+                                        var oldMessage = oldMessages[i];
+                                        oldMessage.remove();
+                                    }
+                                }
+                            }
+                            for(var i=0;i<data.resultObject.length;i++){
+                                var m = data.resultObject[i];
+                                if (m.myMessage) {
+                                    $('#messages').append('<li messageId="' + m.id + '">[' + m.date + '] <span style="color: green; font-weight:bold">' + m.authorName + '</span>: ' + m.content + '</li>');
+                                } else {
+                                    $('#messages').append('<li messageId="' + m.id + '">[' + m.date + '] ' + m.authorName + ': ' + m.content + '</li>');
+                                }
+                            }
+                        }
+                    }
+                });
+            }, messagesUpdateFrequency);
         });
     </script>
 
-    <table>
-        <h1>Welcome to Simple Chat</h1>
+
+    <table align="center" style="padding: 5px; vertical-align: top">
+        <tr>
+            <td colspan="2"> <h1>Welcome to Simple Chat</h1> </td>
+        </tr>
         <tr>
             <td>
                 <ul id="messages">
                     <c:forEach var="message" items="${messages}">
                         <c:choose>
                             <c:when test="${message.authorName eq pageContext.request.userPrincipal.name}">
-                                <li>[${message.dateStr}] <span style="color: green; font-weight:bold">${message.authorName}</span>: ${message.content}</li>
+                                <li messageId="${message.id}">[${message.dateStr}] <span style="color: green; font-weight:bold">${message.authorName}</span>: ${message.content}</li>
                             </c:when>
                             <c:otherwise>
-                                <li>[${message.dateStr}] ${message.authorName}: ${message.content}</li>
+                                <li messageId="${message.id}">[${message.dateStr}] ${message.authorName}: ${message.content}</li>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                 </ul>
-                <form  action="/saveMessage" method="POST">
-                    <textarea rows="10" cols="45" name="message"></textarea>
-                    <input name="submit" type="submit" value="Send">
-                </form>
+                <textarea id="messageContent" rows="10" cols="45" name="message"></textarea>
+                <button id="sendMessage">Send</button>
             </td>
-            <td>
+            <td style="padding: 5px; vertical-align: top">
                 <h2><a href="j_spring_security_logout"> Logout</a></h2>
                 <ul id="users">
                     <c:forEach var="user" items="${users}">
@@ -51,7 +119,6 @@
                         </c:choose>
                     </c:forEach>
                 </ul>
-                <%--<button id="update">UPDATE</button>--%>
             </td>
         </tr>
     </table>

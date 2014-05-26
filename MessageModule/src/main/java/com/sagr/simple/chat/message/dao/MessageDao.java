@@ -7,10 +7,12 @@ import com.google.common.collect.Lists;
 import com.mongodb.Mongo;
 import com.sagr.common.IResult;
 import com.sagr.common.Result;
+import com.sagr.common.ResultCode;
 import com.sagr.simple.chat.message.common.IMessageDao;
 import com.sagr.simple.chat.message.entity.Message;
 import org.bson.types.ObjectId;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +41,18 @@ public class MessageDao extends BasicDAO<Message, ObjectId> implements IMessageD
     @Override
     public void removeMessage(ObjectId id) {
         deleteById(id);
+    }
+
+    @Override
+    public IResult<List<Message>> getMessagesAfterThis(ObjectId messageId, int limit) {
+        if (!exists(createQuery().field("id").equal(messageId))) {
+            return new Result<List<Message>>(ResultCode.FAIL);
+        }
+        Query<Message> query = createQuery();
+        query.order("-id").offset(0).limit(limit);
+        query.field("id").greaterThan(messageId);
+        List<Message> messages = Lists.reverse(query.asList());
+        return new Result<List<Message>>(messages);
     }
 
     public void removeAllMessages() {

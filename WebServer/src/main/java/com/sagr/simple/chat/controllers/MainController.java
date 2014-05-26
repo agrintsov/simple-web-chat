@@ -1,6 +1,7 @@
 package com.sagr.simple.chat.controllers;
 
 import com.sagr.common.IResult;
+import com.sagr.simple.chat.Configuration;
 import com.sagr.simple.chat.message.common.IMessage;
 import com.sagr.simple.chat.message.service.MessageService;
 import com.sagr.user.common.IUser;
@@ -29,12 +30,9 @@ public class MainController extends ABasicController {
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     public String printWelcome(ModelMap model, @RequestParam(defaultValue = "false")boolean login,
                                @RequestParam(defaultValue = "false")boolean alreadyRegistered) {
-
         model.addAttribute("login", login);
         model.addAttribute("alreadyRegistered", alreadyRegistered);
-
         return "welcome";
-
     }
 
     @RequestMapping(value = "/chat", method = RequestMethod.GET)
@@ -43,11 +41,13 @@ public class MainController extends ABasicController {
         if (!allUsers.hasError()) {
             model.addAttribute("users", allUsers.getResultObject());
         }
-        IResult<List<IMessage>> lastMessages = messageService.getLastMessages(100);
+        IResult<List<IMessage>> lastMessages = messageService.getLastMessages(Configuration.MESSAGE_LIMIT);
         if (!lastMessages.hasError()) {
             model.addAttribute("messages", lastMessages.getResultObject());
         }
-        System.out.println(allUsers);
+        model.addAttribute("messageLimit", Configuration.MESSAGE_LIMIT);
+        model.addAttribute("userUpdateFrequency", Configuration.USERS_UPDATE_FREQUENCY);
+        model.addAttribute("messagesUpdateFrequency", Configuration.MESSAGES_UPDATE_FREQUENCY);
         return "chat";
 
     }

@@ -17,7 +17,6 @@ public class Message implements IMessage {
 
     @Id
     private ObjectId id;
-    @JsonIgnore
     private Date date;
     private String content;
     private String authorName;

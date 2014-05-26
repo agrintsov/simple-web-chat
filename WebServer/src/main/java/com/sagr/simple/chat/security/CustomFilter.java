@@ -2,6 +2,8 @@ package com.sagr.simple.chat.security;
 
 
 import com.sagr.user.common.IUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 
@@ -15,6 +17,8 @@ import java.io.IOException;
  * Created by Sasha on 24.05.14.
  */
 public class CustomFilter implements Filter {
+
+    final Logger logger = LoggerFactory.getLogger(CustomFilter.class);
 
     private static final String FORM_USERNAME_KEY = "j_username";
     private static final String FILTER_PROCESSES_URL = "/j_spring_security_check";
@@ -49,6 +53,7 @@ public class CustomFilter implements Filter {
                         return;
                     } else {
                         userService.registerNewUser(userName);
+                        logger.info("User {} logged in", userName);
                     }
                 }
             }

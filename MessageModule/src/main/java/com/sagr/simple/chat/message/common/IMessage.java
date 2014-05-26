@@ -24,4 +24,5 @@ public interface IMessage {
     void setAuthorName(String authorName);
 
     ObjectId getId();
+
 }

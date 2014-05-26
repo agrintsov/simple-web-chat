@@ -6,6 +6,7 @@ import com.sagr.simple.chat.message.common.IMessage;
 import com.sagr.simple.chat.message.common.IMessageDao;
 import com.sagr.simple.chat.message.common.IMessageService;
 import com.sagr.simple.chat.message.entity.Message;
+import org.bson.types.ObjectId;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,5 +34,10 @@ public class MessageService implements IMessageService<IMessage> {
     @Override
     public IResult<List<IMessage>> getLastMessages(int limit) {
         return messageDao.getLastMessages(limit);
+    }
+
+    @Override
+    public IResult<List<IMessage>> getMessagesAfterThis(ObjectId messageId, int limit) {
+        return messageDao.getMessagesAfterThis(messageId, limit);
     }
 }

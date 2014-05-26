@@ -35,9 +35,7 @@ public class SessionListener implements HttpSessionListener {
         if (userService == null) {
             obtainDAO(event);
         }
-        HttpSession session = event.getSession();
         totalActiveSessions++;
-        System.out.println("sessionCreated - add one session into counter");
     }
 
     @Override
@@ -60,7 +58,6 @@ public class SessionListener implements HttpSessionListener {
                 }
             }
         }
-        System.out.println("sessionDestroyed - deduct one session from counter");
     }
 
     private void obtainDAO(HttpSessionEvent event) {
