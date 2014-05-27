@@ -9,6 +9,7 @@ import com.sagr.simple.chat.message.entity.Message;
 import org.bson.types.ObjectId;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,8 +33,8 @@ public class MessageService implements IMessageService<IMessage> {
     }
 
     @Override
-    public IResult<List<IMessage>> getLastMessages(int limit) {
-        return messageDao.getLastMessages(limit);
+    public IResult<List<IMessage>> getLastMessages(int limit, Date fromDate) {
+        return messageDao.getLastMessages(limit, fromDate);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class User implements IUser {
     @Id
     private String name;
     private Set<GrantedAuthority> authorities;
-    private Date lastSingInDate;
+    private Date singInDate;
 
     @Override
     public Set<GrantedAuthority> getAuthorities() {
@@ -71,10 +71,10 @@ public class User implements IUser {
     }
 
     public Date getSingInDate() {
-        return lastSingInDate;
+        return singInDate;
     }
 
-    public void setSingInDate(Date lastSingInDate) {
-        this.lastSingInDate = lastSingInDate;
+    public void setSingInDate(Date singInDate) {
+        this.singInDate = singInDate;
     }
 }

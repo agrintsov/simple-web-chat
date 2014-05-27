@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public abstract class ABasicController {
 
-    protected String getLoggedInPersonName() {
+    protected IUser getLoggedInPerson() {
         if (SecurityContextHolder.getContext().getAuthentication() == null
                 || SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal().equals("anonymousUser")) {
@@ -17,7 +17,7 @@ public abstract class ABasicController {
             Object loggedInObject = SecurityContextHolder.getContext()
                     .getAuthentication().getPrincipal();
             if (loggedInObject instanceof IUser) {
-                return ((IUser) loggedInObject).getName();
+                return ((IUser) loggedInObject);
             } else {
                 return null;
             }

@@ -39,36 +39,36 @@ public class RestController extends ABasicController {
     @RequestMapping(value = "/saveMessage", method = RequestMethod.POST)
     @ResponseBody
     IResult<Boolean> saveMessage(@RequestParam(defaultValue = "")String message) {
-        String personName = getLoggedInPersonName();
-        if (personName == null) {
+        IUser person = getLoggedInPerson();
+        if (person == null) {
             return new Result<Boolean>(ResultCode.NOT_SIGNED_IN);
         }
-        if (!userService.userExists(personName)) {
+        if (!userService.userExists(person.getName())) {
             return new Result<Boolean>(ResultCode.USER_NOT_FOUND);
         }
-        logger.info("User {} sent message: {}", personName, message);
-        return messageService.saveMessage(message, personName);
+        logger.info("User {} sent message: {}", person.getName(), message);
+        return messageService.saveMessage(message, person.getName());
     }
 
     @RequestMapping(value = "/getMessages", method = RequestMethod.GET)
     @ResponseBody
     IResult<List<MessageWrapper>> getMessages(@RequestParam(defaultValue = "")String limit) {
-        String personName = getLoggedInPersonName();
-        if (personName == null) {
+        IUser person = getLoggedInPerson();
+        if (person == null) {
             return new Result<List<MessageWrapper>>(ResultCode.NOT_SIGNED_IN);
         }
         int lim = Configuration.MESSAGE_LIMIT;
         if (!limit.isEmpty()) {
             lim = Integer.parseInt(limit);
         }
-        return convertToMassageWrappers(messageService.getLastMessages(lim), personName);
+        return convertToMassageWrappers(messageService.getLastMessages(lim, person.getSingInDate()), person.getName());
     }
 
     @RequestMapping(value = "/getMessagesAfterThis", method = RequestMethod.GET)
     @ResponseBody
     IResult<List<MessageWrapper>> getMessagesAfterThis(@RequestParam(defaultValue = "")String messageId, @RequestParam(defaultValue = "")String limit) {
-        String personName = getLoggedInPersonName();
-        if (personName == null) {
+        IUser person = getLoggedInPerson();
+        if (person == null) {
             return new Result<List<MessageWrapper>>(ResultCode.NOT_SIGNED_IN);
         }
         if (!ObjectId.isValid(messageId)) {
@@ -78,18 +78,18 @@ public class RestController extends ABasicController {
         if (!limit.isEmpty()) {
             lim = Integer.parseInt(limit);
         }
-        return convertToMassageWrappers(messageService.getMessagesAfterThis(new ObjectId(messageId), lim), personName);
+        return convertToMassageWrappers(messageService.getMessagesAfterThis(new ObjectId(messageId), lim), person.getName());
     }
 
 
     @RequestMapping(value = "/getOnlineUsers", method = RequestMethod.GET)
     @ResponseBody IResult<List<UserWrapper>> getOnlineUsers() {
-        String personName = getLoggedInPersonName();
-        if (personName == null) {
+        IUser person = getLoggedInPerson();
+        if (person == null) {
             return new Result<List<UserWrapper>>(ResultCode.NOT_SIGNED_IN);
         }
         IResult<List<IUser>> allUsers = userService.getAllUsers();
-        return convertToUserWrappers(allUsers, personName);
+        return convertToUserWrappers(allUsers, person.getName());
     }
 
     private IResult<List<MessageWrapper>> convertToMassageWrappers(IResult<List<IMessage>> result, String currentUser) {

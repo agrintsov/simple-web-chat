@@ -27,7 +27,7 @@ public class MainController extends ABasicController {
     @Resource(name = "messageService")
     private MessageService messageService;
 
-    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
+    @RequestMapping(value = {"/welcome","/"}, method = RequestMethod.GET)
     public String printWelcome(ModelMap model, @RequestParam(defaultValue = "false")boolean login,
                                @RequestParam(defaultValue = "false")boolean alreadyRegistered) {
         model.addAttribute("login", login);
@@ -37,13 +37,16 @@ public class MainController extends ABasicController {
 
     @RequestMapping(value = "/chat", method = RequestMethod.GET)
     public String chat(ModelMap model) {
+        IUser person = getLoggedInPerson();
         IResult<List<IUser>> allUsers = userService.getAllUsers();
         if (!allUsers.hasError()) {
             model.addAttribute("users", allUsers.getResultObject());
         }
-        IResult<List<IMessage>> lastMessages = messageService.getLastMessages(Configuration.MESSAGE_LIMIT);
-        if (!lastMessages.hasError()) {
-            model.addAttribute("messages", lastMessages.getResultObject());
+        if (person != null) {
+            IResult<List<IMessage>> lastMessages = messageService.getLastMessages(Configuration.MESSAGE_LIMIT, person.getSingInDate());
+            if (!lastMessages.hasError()) {
+                model.addAttribute("messages", lastMessages.getResultObject());
+            }
         }
         model.addAttribute("messageLimit", Configuration.MESSAGE_LIMIT);
         model.addAttribute("userUpdateFrequency", Configuration.USERS_UPDATE_FREQUENCY);
