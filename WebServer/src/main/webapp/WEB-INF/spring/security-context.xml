@@ -26,7 +26,6 @@
     <beans:bean id="sessionRegistry"
                 class="org.springframework.security.core.session.SessionRegistryImpl" />
 
-    <beans:bean id="sessionRegistryService" class="com.sagr.simple.chat.security.SessionRegistryService"/>
     <beans:bean id="customFilter" class="com.sagr.simple.chat.security.CustomFilter"/>
 
     <beans:bean id="concurrencyFilter"

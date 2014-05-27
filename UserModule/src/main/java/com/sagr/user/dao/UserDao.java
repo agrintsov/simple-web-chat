@@ -1,24 +1,18 @@
 package com.sagr.user.dao;
 
-import com.google.code.morphia.Key;
 import com.google.code.morphia.Morphia;
 import com.google.code.morphia.dao.BasicDAO;
 import com.google.code.morphia.query.Query;
 import com.mongodb.Mongo;
-import com.mongodb.WriteResult;
 import com.sagr.common.IResult;
 import com.sagr.common.Result;
 import com.sagr.common.ResultCode;
-import com.sagr.user.common.IUser;
 import com.sagr.user.common.IUserDao;
 import com.sagr.user.entity.User;
 import org.bson.types.ObjectId;
 
 import java.util.List;
 
-/**
- * Created by Sasha on 22.05.14.
- */
 public class UserDao extends BasicDAO<User, ObjectId> implements IUserDao<User> {
 
     public static final String NAME_FIELD = "name";
@@ -26,15 +20,6 @@ public class UserDao extends BasicDAO<User, ObjectId> implements IUserDao<User> 
     public UserDao(Mongo mongo, Morphia morphia, String dbName) {
         super(User.class, mongo, morphia, dbName);
         removeAllUsers();
-    }
-
-    @Override
-    public IResult<Boolean> saveUser(User user) {
-        if (!exists(user.getName())) {
-            return new Result<Boolean>(ResultCode.USER_NOT_FOUND);
-        }
-        save(user);
-        return new Result<Boolean>(exists(user.getName()));
     }
 
     @Override

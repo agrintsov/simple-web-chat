@@ -2,9 +2,6 @@ package com.sagr.common;
 
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
-/**
- * Created by Sasha on 24.05.14.
- */
 @JsonDeserialize(using = ResultCodeDeserializer.class)
 public enum ResultCode {
 
@@ -15,7 +12,11 @@ public enum ResultCode {
     USER_HAS_BEEN_REGISTERED(2, "User with the same name has been registered already"),
     USER_NOT_FOUND(3, "User is not found"),
     NOT_SIGNED_IN(4, "User is not signed in"),
+    USER_NAME_IS_EMPTY(4, "User's name is empty"),
 
+    MESSAGE_SIZE_LIMIT(101, "Message have exceeded size limit"),
+    MESSAGE_IS_EMPTY(102, "Message is empty"),
+    MESSAGE_AUTHOR_IS_EMPTY(103, "Message's author is empty"),
 
     LAST_ERROR(10000, "");
 
@@ -35,15 +36,6 @@ public enum ResultCode {
 
     public String getDescription() {
         return description;
-    }
-
-    public static ResultCode getResultByCode(int code){
-        for (ResultCode resultCode : values()) {
-            if(resultCode.getCode() == code){
-                return resultCode;
-            }
-        }
-        return null;
     }
 
 }

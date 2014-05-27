@@ -49,6 +49,7 @@ public class MainController extends ABasicController {
             }
         }
         model.addAttribute("messageLimit", Configuration.MESSAGE_LIMIT);
+        model.addAttribute("messageSizeLimit", Configuration.MESSAGE_MAX_SIZE);
         model.addAttribute("userUpdateFrequency", Configuration.USERS_UPDATE_FREQUENCY);
         model.addAttribute("messagesUpdateFrequency", Configuration.MESSAGES_UPDATE_FREQUENCY);
         return "chat";

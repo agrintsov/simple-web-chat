@@ -2,9 +2,48 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <script type="text/javascript" src="/scripts/jquery-1.11.1.js"></script>
+    <title>Simple Chat</title>
 </head>
 <body>
+    <table align="center" style="padding: 5px; vertical-align: top; width: 700px" >
+        <tr>
+            <td colspan="2"> <h1>Welcome to Simple Chat</h1> </td>
+        </tr>
+        <tr>
+            <td>
+                <ul id="messages">
+                    <c:forEach var="message" items="${messages}">
+                        <c:choose>
+                            <c:when test="${message.authorName eq pageContext.request.userPrincipal.name}">
+                                <li messageId="${message.id}">[${message.dateStr}] <span style="color: green; font-weight:bold">${message.authorName}</span>: ${message.content}</li>
+                            </c:when>
+                            <c:otherwise>
+                                <li messageId="${message.id}">[${message.dateStr}] ${message.authorName}: ${message.content}</li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </ul>
+                <textarea id="messageContent" rows="10" cols="45" name="message" maxlength="${messageSizeLimit}"></textarea>
+                <button id="sendMessage">Send</button>
+            </td>
+            <td style="padding: 5px; vertical-align: top">
+                <h2><a href="j_spring_security_logout"> Logout</a></h2>
+                <ul id="users">
+                    <c:forEach var="user" items="${users}">
+                        <c:choose>
+                            <c:when test="${user.name eq pageContext.request.userPrincipal.name}">
+                                <li><span style="color: green; font-weight:bold">${user.name}</span></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li>${user.name}</li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript" src="/scripts/jquery-1.11.1.js"></script>
     <script>
         var messageLimit = ${messageLimit};
         var userUpdateFrequency= ${userUpdateFrequency};
@@ -46,7 +85,7 @@
                     getMessagesUrl = 'getMessages';
                 } else {
                     var lastMessageId = oldMessages.last().attr('messageId');
-                    getMessagesUrl = 'getMessagesAfterThis?messageId=' + lastMessageId;
+                    getMessagesUrl = 'getNextMessages?messageId=' + lastMessageId;
                 }
                 $.getJSON(getMessagesUrl, function(data){
                     if (data.failed) {
@@ -82,47 +121,5 @@
             }, messagesUpdateFrequency);
         });
     </script>
-
-
-    <table align="center" style="padding: 5px; vertical-align: top">
-        <tr>
-            <td colspan="2"> <h1>Welcome to Simple Chat</h1> </td>
-        </tr>
-        <tr>
-            <td>
-                <ul id="messages">
-                    <c:forEach var="message" items="${messages}">
-                        <c:choose>
-                            <c:when test="${message.authorName eq pageContext.request.userPrincipal.name}">
-                                <li messageId="${message.id}">[${message.dateStr}] <span style="color: green; font-weight:bold">${message.authorName}</span>: ${message.content}</li>
-                            </c:when>
-                            <c:otherwise>
-                                <li messageId="${message.id}">[${message.dateStr}] ${message.authorName}: ${message.content}</li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </ul>
-                <textarea id="messageContent" rows="10" cols="45" name="message"></textarea>
-                <button id="sendMessage">Send</button>
-            </td>
-            <td style="padding: 5px; vertical-align: top">
-                <h2><a href="j_spring_security_logout"> Logout</a></h2>
-                <ul id="users">
-                    <c:forEach var="user" items="${users}">
-                        <c:choose>
-                            <c:when test="${user.name eq pageContext.request.userPrincipal.name}">
-                                <li><span style="color: green; font-weight:bold">${user.name}</span></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li>${user.name}</li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </ul>
-            </td>
-        </tr>
-    </table>
-
-
 </body>
 </html>

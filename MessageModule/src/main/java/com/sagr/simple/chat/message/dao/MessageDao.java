@@ -15,9 +15,6 @@ import org.bson.types.ObjectId;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Sasha on 26.05.14.
- */
 public class MessageDao extends BasicDAO<Message, ObjectId> implements IMessageDao<Message> {
 
     protected MessageDao(Mongo mongo, Morphia morphia, String dbName) {
@@ -42,12 +39,7 @@ public class MessageDao extends BasicDAO<Message, ObjectId> implements IMessageD
     }
 
     @Override
-    public void removeMessage(ObjectId id) {
-        deleteById(id);
-    }
-
-    @Override
-    public IResult<List<Message>> getMessagesAfterThis(ObjectId messageId, int limit) {
+    public IResult<List<Message>> getNextMessages(ObjectId messageId, int limit) {
         if (!exists(createQuery().field("id").equal(messageId))) {
             return new Result<List<Message>>(ResultCode.FAIL);
         }
@@ -58,8 +50,4 @@ public class MessageDao extends BasicDAO<Message, ObjectId> implements IMessageD
         return new Result<List<Message>>(messages);
     }
 
-    public void removeAllMessages() {
-        Query<Message> query = createQuery();
-        deleteByQuery(query);
-    }
 }

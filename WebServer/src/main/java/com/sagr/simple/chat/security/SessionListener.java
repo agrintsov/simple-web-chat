@@ -14,35 +14,26 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-/**
- * Created by Sasha on 24.05.14.
- */
+
 @Component
 public class SessionListener implements HttpSessionListener {
 
+    private static final String SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
     final Logger logger = LoggerFactory.getLogger(SessionListener.class);
 
     private IUserService userService;
-
-    private static int totalActiveSessions;
-
-    public static int getTotalActiveSession(){
-        return totalActiveSessions;
-    }
 
     @Override
     public void sessionCreated(HttpSessionEvent event) {
         if (userService == null) {
             obtainDAO(event);
         }
-        totalActiveSessions++;
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent event) {
-        totalActiveSessions--;
         HttpSession session = event.getSession();
-        Object context = session.getAttribute("SPRING_SECURITY_CONTEXT");
+        Object context = session.getAttribute(SECURITY_CONTEXT);
         if (context != null) {
             SecurityContext securityContext = (SecurityContext)context;
             Authentication authentication = securityContext.getAuthentication();

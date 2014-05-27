@@ -1,15 +1,10 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 21.05.14
-  Time: 0:18
-  To change this template use File | Settings | File Templates.
---%>
-<%@page import="org.springframework.security.core.context.SecurityContext" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
+<head>
+    <title>Simple Chat</title>
+</head>
 <body>
     <h1>Simple Chat</h1>
     <c:if test="${pageContext.request.userPrincipal == null}">
@@ -33,11 +28,8 @@
             </table>
         </form>
     </c:if>
-    <%--<sec:authorize access="isAuthenticated()">
-        <a href="j_spring_security_logout"> Logout</a>
-    </sec:authorize>--%>
     <c:if test="${pageContext.request.userPrincipal.name != null}">
-        <a href="j_spring_security_logout"> Logout</a>
+        <a href="j_spring_security_logout"> Logout</a> </br> <a href="/chat"> -= Go to chat =- </a>
     </c:if>
 </body>
 </html>

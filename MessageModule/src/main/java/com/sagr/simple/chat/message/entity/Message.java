@@ -9,9 +9,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.util.Date;
 
-/**
- * Created by Sasha on 26.05.14.
- */
 @Entity(value = "messages", noClassnameStored = true)
 public class Message implements IMessage {
 

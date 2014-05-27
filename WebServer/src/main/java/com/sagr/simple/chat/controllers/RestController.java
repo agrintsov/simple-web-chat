@@ -46,6 +46,9 @@ public class RestController extends ABasicController {
         if (!userService.userExists(person.getName())) {
             return new Result<Boolean>(ResultCode.USER_NOT_FOUND);
         }
+        if (message.length() > Configuration.MESSAGE_MAX_SIZE) {
+            return new Result<Boolean>(ResultCode.MESSAGE_SIZE_LIMIT);
+        }
         logger.info("User {} sent message: {}", person.getName(), message);
         return messageService.saveMessage(message, person.getName());
     }
@@ -64,9 +67,9 @@ public class RestController extends ABasicController {
         return convertToMassageWrappers(messageService.getLastMessages(lim, person.getSingInDate()), person.getName());
     }
 
-    @RequestMapping(value = "/getMessagesAfterThis", method = RequestMethod.GET)
+    @RequestMapping(value = "/getNextMessages", method = RequestMethod.GET)
     @ResponseBody
-    IResult<List<MessageWrapper>> getMessagesAfterThis(@RequestParam(defaultValue = "")String messageId, @RequestParam(defaultValue = "")String limit) {
+    IResult<List<MessageWrapper>> getNextMessages(@RequestParam(defaultValue = "")String messageId, @RequestParam(defaultValue = "")String limit) {
         IUser person = getLoggedInPerson();
         if (person == null) {
             return new Result<List<MessageWrapper>>(ResultCode.NOT_SIGNED_IN);
@@ -78,7 +81,7 @@ public class RestController extends ABasicController {
         if (!limit.isEmpty()) {
             lim = Integer.parseInt(limit);
         }
-        return convertToMassageWrappers(messageService.getMessagesAfterThis(new ObjectId(messageId), lim), person.getName());
+        return convertToMassageWrappers(messageService.getNextMessages(new ObjectId(messageId), lim), person.getName());
     }
 
 

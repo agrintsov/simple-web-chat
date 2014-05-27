@@ -9,9 +9,6 @@ import org.codehaus.jackson.map.JsonDeserializer;
 
 import java.io.IOException;
 
-/**
- * Created by Sasha on 24.05.14.
- */
 public class ResultCodeDeserializer extends JsonDeserializer<ResultCode> {
 
     @Override
@@ -23,7 +20,7 @@ public class ResultCodeDeserializer extends JsonDeserializer<ResultCode> {
                 return resultCode;
             }
         }
-        throw new JsonParseException("No suitable ResultCode found for code = " + value, jp.getTokenLocation());
+        return null;
     }
 
 }

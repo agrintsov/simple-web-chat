@@ -4,9 +4,6 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 
-/**
- * Created by Sasha on 24.05.14.
- */
 public interface IResult<T> {
 
     boolean hasError();

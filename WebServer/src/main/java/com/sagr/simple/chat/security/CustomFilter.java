@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by Sasha on 24.05.14.
- */
+
 public class CustomFilter implements Filter {
 
     final Logger logger = LoggerFactory.getLogger(CustomFilter.class);

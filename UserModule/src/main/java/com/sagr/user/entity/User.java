@@ -12,10 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Date;
 import java.util.Set;
 
-/**
- * Created by Sasha on 21.05.14.
- */
-
 @Entity(value = "users", noClassnameStored = true)
 public class User implements IUser {
     @Id

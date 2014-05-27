@@ -6,11 +6,31 @@ import org.bson.types.ObjectId;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Sasha on 26.05.14.
- */
 public interface IMessageService<T extends IMessage> {
+    /**
+     * Simple save message method
+     *
+     * @param message not empty
+     * @param author not empty
+     * @return
+     */
     IResult<Boolean> saveMessage(String message, String author);
+
+    /**
+     * Return messages after date
+     *
+     * @param limit message number
+     * @param fromDate
+     * @return
+     */
     IResult<List<T>> getLastMessages(int limit, Date fromDate);
-    IResult<List<T>> getMessagesAfterThis(ObjectId messageId, int limit);
+
+    /**
+     * Return messages after this
+     *
+     * @param messageId
+     * @param limit message number
+     * @return
+     */
+    IResult<List<T>> getNextMessages(ObjectId messageId, int limit);
 }

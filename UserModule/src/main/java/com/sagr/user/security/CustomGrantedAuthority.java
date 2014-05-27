@@ -2,9 +2,6 @@ package com.sagr.user.security;
 
 import org.springframework.security.core.GrantedAuthority;
 
-/**
- * Created by Sasha on 24.05.14.
- */
 public class CustomGrantedAuthority implements GrantedAuthority {
     private static final long serialVersionUID = Long.MAX_VALUE;
 
@@ -14,6 +11,7 @@ public class CustomGrantedAuthority implements GrantedAuthority {
         this.role = role;
     }
 
+    //Constructor for morphia
     public CustomGrantedAuthority() {
     }
 
@@ -41,11 +39,4 @@ public class CustomGrantedAuthority implements GrantedAuthority {
         return this.role;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    protected void setRole(String role) {
-        this.role = role;
-    }
 }

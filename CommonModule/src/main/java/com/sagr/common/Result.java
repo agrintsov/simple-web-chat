@@ -7,9 +7,6 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.util.*;
 
-/**
- * Created by Sasha on 24.05.14.
- */
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Result<T> implements IResult<T> {
@@ -28,7 +25,7 @@ public class Result<T> implements IResult<T> {
     }
 
     // failed result
-    public Result(String errorMsg ){
+    public Result(String errorMsg){
         resultCode = ResultCode.FAIL;
         failed = true;
         addErrorMessage(errorMsg);
@@ -39,13 +36,6 @@ public class Result<T> implements IResult<T> {
         if(!ResultCode.SUCCESS.equals(code)) {
             failed = true;
             addErrorMessage(resultCode.getDescription());
-        }
-    }
-
-    public Result(ResultCode code, Map<String, Object> wrongProperties) {
-        this(code);
-        for (String property : wrongProperties.keySet()){
-            addErrorMessage("Property "+ property + " has wrong value: " + wrongProperties.get(property));
         }
     }
 

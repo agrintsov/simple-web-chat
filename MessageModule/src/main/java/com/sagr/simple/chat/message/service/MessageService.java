@@ -2,6 +2,7 @@ package com.sagr.simple.chat.message.service;
 
 import com.sagr.common.IResult;
 import com.sagr.common.Result;
+import com.sagr.common.ResultCode;
 import com.sagr.simple.chat.message.common.IMessage;
 import com.sagr.simple.chat.message.common.IMessageDao;
 import com.sagr.simple.chat.message.common.IMessageService;
@@ -12,9 +13,6 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Sasha on 26.05.14.
- */
 public class MessageService implements IMessageService<IMessage> {
 
     @Resource(name = "messageDao")
@@ -22,11 +20,11 @@ public class MessageService implements IMessageService<IMessage> {
 
     @Override
     public IResult<Boolean> saveMessage(String message, String author) {
-        if(message.isEmpty()) {
-            return new Result<Boolean>(false);
+        if(message == null || message.isEmpty()) {
+            return new Result<Boolean>(ResultCode.MESSAGE_IS_EMPTY);
         }
-        if(author.isEmpty()) {
-            return new Result<Boolean>(false);
+        if(author == null || author.isEmpty()) {
+            return new Result<Boolean>(ResultCode.MESSAGE_AUTHOR_IS_EMPTY);
         }
         Message m = new Message(message, author);
         return messageDao.saveMessage(m);
@@ -38,7 +36,7 @@ public class MessageService implements IMessageService<IMessage> {
     }
 
     @Override
-    public IResult<List<IMessage>> getMessagesAfterThis(ObjectId messageId, int limit) {
-        return messageDao.getMessagesAfterThis(messageId, limit);
+    public IResult<List<IMessage>> getNextMessages(ObjectId messageId, int limit) {
+        return messageDao.getNextMessages(messageId, limit);
     }
 }
