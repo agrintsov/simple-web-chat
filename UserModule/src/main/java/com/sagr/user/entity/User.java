@@ -3,11 +3,7 @@ package com.sagr.user.entity;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.sagr.user.common.IUser;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 
 import java.util.Date;
 import java.util.Set;
@@ -73,4 +69,5 @@ public class User implements IUser {
     public void setSingInDate(Date singInDate) {
         this.singInDate = singInDate;
     }
+
 }

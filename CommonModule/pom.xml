@@ -7,7 +7,6 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>simple-web-chat</groupId>
 	<artifactId>CommonModule</artifactId>
 	<name>CommonModule</name>
 	<packaging>jar</packaging>
@@ -25,21 +24,6 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongoDb-driver-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.morphia</groupId>
-            <artifactId>morphia</artifactId>
-            <version>${morphia-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j-version}</version>
-        </dependency>
         <!-- Jackson -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>

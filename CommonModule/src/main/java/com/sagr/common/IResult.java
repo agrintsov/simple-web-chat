@@ -1,7 +1,5 @@
 package com.sagr.common;
 
-import org.bson.types.ObjectId;
-
 import java.util.List;
 
 public interface IResult<T> {
@@ -10,19 +8,11 @@ public interface IResult<T> {
 
     T getResultObject();
 
+    // For java script
     List<String> getErrorList();
-
-    void setResultObjectId(ObjectId id);
-
-    ObjectId getResultObjectId();
 
     ResultCode getResultCode();
 
-    void setObject(T object);
-
-    void setAsFailed();
-
     void addErrorMessage(String message);
 
-    void addErrorMessages(List<String> messages);
 }

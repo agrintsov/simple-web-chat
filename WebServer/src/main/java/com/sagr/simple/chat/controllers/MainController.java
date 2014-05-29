@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import java.util.List;
 
-/**
- * Created by Sasha on 21.05.14.
- */
 @Controller
 public class MainController extends ABasicController {
 
@@ -27,9 +24,9 @@ public class MainController extends ABasicController {
     @Resource(name = "messageService")
     private MessageService messageService;
 
-    @RequestMapping(value = {"/welcome","/"}, method = RequestMethod.GET)
-    public String printWelcome(ModelMap model, @RequestParam(defaultValue = "false")boolean login,
-                               @RequestParam(defaultValue = "false")boolean alreadyRegistered) {
+    @RequestMapping(value = {"/welcome", "/"}, method = RequestMethod.GET)
+    public String printWelcome(ModelMap model, @RequestParam(defaultValue = "false") boolean login,
+                               @RequestParam(defaultValue = "false") boolean alreadyRegistered) {
         model.addAttribute("login", login);
         model.addAttribute("alreadyRegistered", alreadyRegistered);
         return "welcome";

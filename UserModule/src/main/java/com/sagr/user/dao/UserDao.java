@@ -57,16 +57,14 @@ public class UserDao extends BasicDAO<User, ObjectId> implements IUserDao<User> 
     }
 
     @Override
-     public void removeUser(String name) {
+    public void removeUser(String name) {
         Query<User> query = getDatastore().createQuery(entityClazz);
         query.field(NAME_FIELD).equal(name);
         deleteByQuery(query);
-        return;
     }
 
     public void removeAllUsers() {
         Query<User> query = getDatastore().createQuery(entityClazz);
         deleteByQuery(query);
-        return;
     }
 }

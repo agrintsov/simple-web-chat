@@ -31,7 +31,7 @@ public class MessageDao extends BasicDAO<Message, ObjectId> implements IMessageD
     public IResult<List<Message>> getLastMessages(int limit, Date fromDate) {
         Query<Message> query = createQuery();
         query.order("-date").offset(0).limit(limit);
-        if(fromDate != null) {
+        if (fromDate != null) {
             query.field("date").greaterThanOrEq(fromDate);
         }
         List<Message> messages = Lists.reverse(query.asList());

@@ -3,9 +3,6 @@ package com.sagr.simple.chat.wrappers;
 import com.sagr.common.DateFormatter;
 import com.sagr.simple.chat.message.common.IMessage;
 
-/**
- * Created by Sasha on 26.05.14.
- */
 public class MessageWrapper {
 
     private IMessage message;

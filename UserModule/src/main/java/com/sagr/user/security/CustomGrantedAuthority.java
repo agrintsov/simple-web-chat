@@ -3,6 +3,7 @@ package com.sagr.user.security;
 import org.springframework.security.core.GrantedAuthority;
 
 public class CustomGrantedAuthority implements GrantedAuthority {
+
     private static final long serialVersionUID = Long.MAX_VALUE;
 
     private String role;

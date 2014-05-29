@@ -7,12 +7,15 @@ import java.util.Date;
 import java.util.Set;
 
 public interface IUser extends UserDetails {
+
     String getName();
+
     void setName(String name);
 
     void setAuthorities(Set<GrantedAuthority> authorities);
 
     Date getSingInDate();
+
     void setSingInDate(Date date);
 
 }

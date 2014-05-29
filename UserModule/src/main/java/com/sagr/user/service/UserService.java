@@ -21,7 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 
 public class UserService implements IUserService<IUser>, UserDetailsService {
-    final Logger logger = LoggerFactory.getLogger(UserService.class);
+
+    private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Resource(name = "userDao")
     private IUserDao<IUser> dao;
@@ -30,7 +31,7 @@ public class UserService implements IUserService<IUser>, UserDetailsService {
         if (name == null || name.isEmpty()) {
             new Result<Boolean>(ResultCode.USER_NAME_IS_EMPTY);
         }
-        if (userExists(name)) {
+        if (isUserExists(name)) {
             new Result<Boolean>(ResultCode.USER_HAS_BEEN_REGISTERED);
         }
         User user = new User();
@@ -46,13 +47,12 @@ public class UserService implements IUserService<IUser>, UserDetailsService {
         return dao.getAll();
     }
 
-    public boolean userExists(String name) {
+    public boolean isUserExists(String name) {
         return dao.exists(name);
     }
 
     public void removeUser(String name) {
         dao.removeUser(name);
-        return;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class UserService implements IUserService<IUser>, UserDetailsService {
         IResult<IUser> r = dao.getUser(username);
         if (r.hasError()) {
             logger.error(r.getResultCode().getDescription());
-            throw new UsernameNotFoundException("User with name "+ username +" not found");
+            throw new UsernameNotFoundException("User with name " + username + " not found");
         }
         return r.getResultObject();
     }

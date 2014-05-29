@@ -35,7 +35,7 @@ public class SessionListener implements HttpSessionListener {
         HttpSession session = event.getSession();
         Object context = session.getAttribute(SECURITY_CONTEXT);
         if (context != null) {
-            SecurityContext securityContext = (SecurityContext)context;
+            SecurityContext securityContext = (SecurityContext) context;
             Authentication authentication = securityContext.getAuthentication();
             if (authentication != null) {
                 Object principal = authentication.getPrincipal();

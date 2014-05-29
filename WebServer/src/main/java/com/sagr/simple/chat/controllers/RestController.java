@@ -23,9 +23,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Sasha on 25.05.14.
- */
 @Controller
 public class RestController extends ABasicController {
     final Logger logger = LoggerFactory.getLogger(RestController.class);
@@ -43,7 +40,7 @@ public class RestController extends ABasicController {
         if (person == null) {
             return new Result<Boolean>(ResultCode.NOT_SIGNED_IN);
         }
-        if (!userService.userExists(person.getName())) {
+        if (!userService.isUserExists(person.getName())) {
             return new Result<Boolean>(ResultCode.USER_NOT_FOUND);
         }
         if (message.length() > Configuration.MESSAGE_MAX_SIZE) {

@@ -3,9 +3,6 @@ package com.sagr.simple.chat.controllers;
 import com.sagr.user.common.IUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-/**
- * Created by Sasha on 26.05.14.
- */
 public abstract class ABasicController {
 
     protected IUser getLoggedInPerson() {

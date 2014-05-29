@@ -8,17 +8,12 @@ public interface IMessage {
 
     Date getDate();
 
+    // formatted date for jsp
     String getDateStr();
-
-    void setDate(Date date);
 
     String getContent();
 
-    void setContent(String content);
-
     String getAuthorName();
-
-    void setAuthorName(String authorName);
 
     ObjectId getId();
 

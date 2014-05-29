@@ -20,10 +20,10 @@ public class MessageService implements IMessageService<IMessage> {
 
     @Override
     public IResult<Boolean> saveMessage(String message, String author) {
-        if(message == null || message.isEmpty()) {
+        if (message == null || message.isEmpty()) {
             return new Result<Boolean>(ResultCode.MESSAGE_IS_EMPTY);
         }
-        if(author == null || author.isEmpty()) {
+        if (author == null || author.isEmpty()) {
             return new Result<Boolean>(ResultCode.MESSAGE_AUTHOR_IS_EMPTY);
         }
         Message m = new Message(message, author);

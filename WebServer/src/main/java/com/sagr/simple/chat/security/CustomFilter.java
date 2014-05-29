@@ -46,7 +46,7 @@ public class CustomFilter implements Filter {
                 if (userName.isEmpty()) {
 
                 } else {
-                    if (userService.userExists(userName)) {
+                    if (userService.isUserExists(userName)) {
                         strategy.sendRedirect(request, response, getFullUrl(request));
                         return;
                     } else {
@@ -86,11 +86,4 @@ public class CustomFilter implements Filter {
         return uri.endsWith(request.getContextPath() + FILTER_PROCESSES_URL);
     }
 
-    public RedirectStrategy getStrategy() {
-        return strategy;
-    }
-
-    public void setStrategy(RedirectStrategy strategy) {
-        this.strategy = strategy;
-    }
 }

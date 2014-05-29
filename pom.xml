@@ -36,7 +36,6 @@
 		<codec-version>1.5</codec-version>	
 		<jackson-version>1.9.12</jackson-version>
 		<aspectj-version>1.7.2</aspectj-version>
-		<joda-time>2.1</joda-time>		
 		<slf4j-version>1.7.5</slf4j-version>
 		<morphia-version>1.00-SNAPSHOT</morphia-version>
 		<jdom-version>1.0</jdom-version>
@@ -49,7 +48,6 @@
 		<aspectj-version>1.7.2</aspectj-version>
 		<quartz-version>2.1.7</quartz-version>
 		<commons-io-version>2.4</commons-io-version>
-		<tuckey.version>4.0.5-SNAPSHOT</tuckey.version>
 		<servlet.api.version>3.1.0</servlet.api.version>
 		<commons.lang.version>3.1</commons.lang.version>
 		<google.guava.version>14.0.1</google.guava.version>

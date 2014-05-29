@@ -5,7 +5,6 @@ import com.google.code.morphia.annotations.Id;
 import com.sagr.common.DateFormatter;
 import com.sagr.simple.chat.message.common.IMessage;
 import org.bson.types.ObjectId;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.util.Date;
 
@@ -35,24 +34,12 @@ public class Message implements IMessage {
         return DateFormatter.getDateWithTimeFormat(date);
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getAuthorName() {
         return authorName;
-    }
-
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
     }
 
     public ObjectId getId() {
