@@ -13,6 +13,4 @@ public interface IResult<T> {
 
     ResultCode getResultCode();
 
-    void addErrorMessage(String message);
-
 }
